@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    select, button {
+      display: block;
+      margin: 10px 0;
+      padding: 8px;
+      width: 100%;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      min-height: 60px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>B&V Comment Generator</h2>
+
+<label>Course / Year Group:</label>
+<select id="course">
+  <option value="1">Year 7 Beliefs & Values</option>
+  <option value="2">Year 7 Beliefs & Values: The Hobbit</option>
+  <option value="3">Year 8 Beliefs & Values</option>
+  <option value="4">Year 9 Beliefs & Values</option>
+  <option value="5">Year 10 Beliefs & Values: The Matrix & The Mount</option>
+  <option value="6">Year 10 Beliefs & Values: World Religions</option>
+  <option value="7">Year 10 Beliefs & Values: The Alpha Course</option>
+</select>
+
+<label>Engagement Level:</label>
+<select id="engagement">
+  <option value="5">5 - Excellent</option>
+  <option value="4">4 - Good</option>
+  <option value="3">3 - Satisfactory</option>
+  <option value="2">2 - Limited</option>
+  <option value="1">1 - Poor</option>
+</select>
+
+<label>Respect Level:</label>
+<select id="respect">
+  <option value="5">5 - Excellent</option>
+  <option value="4">4 - Good</option>
+  <option value="3">3 - Satisfactory</option>
+  <option value="2">2 - Limited</option>
+  <option value="1">1 - Poor</option>
+</select>
+
+<label>Student Pronouns:</label>
+<select id="pronoun">
+  <option value="he">He/Him</option>
+  <option value="she">She/Her</option>
+</select>
+
+<button onclick="generateReport()">Generate Report</button>
+
+<div id="output"></div>
+<button onclick="copyReport()">Copy Comment</button>
+
+<script>
+function generateReport() {
+
+  const course = document.getElementById("course").value;
+  const engagement = document.getElementById("engagement").value;
+  const respect = document.getElementById("respect").value;
+  const pronoun = document.getElementById("pronoun").value;
+
+  // Pronouns
+  const pronouns = {
+    he: {subj: "He", obj: "him", poss: "his"},
+    she: {subj: "She", obj: "her", poss: "her"},
+  };
+
+  const p = pronouns[pronoun];
+
+  // COURSE SENTENCES (EDIT THESE)
+  const courseSentences = {
+    1: "This semester, we have been focusing on the College Values, as well as beginning to consider how the Bible has shaped our society's values.",
+    2: "This semester, we have been exploring The Hobbit as part of the year 7 Beliefs and Values program. We have been using the story to explore our own beliefs and values and to learn some of the stories from the Bible.",
+    3: "This semester, we have been considering the role authority plays in shaping our beliefs and values, and have been looking at the overall big picture of the Bible narrative.",
+    4: "This semester, we have looking behind the scenes of Social Media companies, and have also looked at the life of Jesus, using The 'Chosen' television series.",
+    5: "This semester, we have been studying The Matrix film and Jesus' Sermon on the Mount, exploring the big philosophical questions posed by both.",
+    6: "This semester, we have been studying World Religions in an attempt to better understand the people around us that we love and live with.",
+    7: "This semester, we have been conpleting The Alpha Course as a way of provoking and inviting students to reflect on their own beliefs and values."
+  };
+
+  // ENGAGEMENT SENTENCES
+  const engagementSentences = {
+    5: `{vc:name_prefname} has consistently demonstrated excellent engagement in class, contributing thoughtfully and showing strong initiative.`,
+    4: `{vc:name_prefname} has demonstrated good engagement in class and regularly contributes to discussions.`,
+    3: `{vc:name_prefname} has shown a satisfactory level of engagement in class and participates when prompted.`,
+    2: `{vc:name_prefname} has been a valued class member, but has demonstrated limited engagement in class and would benefit from contributing more actively.`,
+    1: `{vc:name_prefname} has been a valued class member, but has unfortunately shown poor engagement in class.`
+  };
+
+  // RESPECT SENTENCES
+  const respectSentences = {
+    5: `${p.subj} consistently shows excellent respect toward peers and the teacher.`,
+    4: `${p.subj} shows good respect toward others in the classroom.`,
+    3: `${p.subj} is generally respectful, though there is room for improvement.`,
+    2: `${p.subj} shows limited respect at times and could benefit from working on interactions with others.`,
+    1: `${p.subj} often struggles to show appropriate respect toward peers and the teacher.`
+  };
+
+  // BUILD REPORT (force single paragraph)
+  const report = `${courseSentences[course]} ${engagementSentences[engagement]} ${respectSentences[respect]}`
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  document.getElementById("output").innerText = report;
+}
+
+function copyReport() {
+  const text = document.getElementById("output").innerText;
+  if (!text) return;
+
+  const btn = document.querySelector('button[onclick="copyReport()"]');
+
+  navigator.clipboard.writeText(text).then(() => {
+    if (btn) {
+      const original = btn.innerText;
+      btn.innerText = "Copied";
+      setTimeout(() => btn.innerText = original, 1200);
+    }
+  });
+}
+</script>
+
+</body>
+</html>
