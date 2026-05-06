@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Report Generator</title>
+  <title>B&V Comments</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -40,7 +40,7 @@
   <option value="7">Year 10 Beliefs & Values: The Alpha Course</option>
 </select>
 
-<label>Engagement Level:</label>
+<label>Engagement:</label>
 <select id="engagement">
   <option value="5">5 - Excellent</option>
   <option value="4">4 - Good</option>
@@ -49,7 +49,7 @@
   <option value="1">1 - Poor</option>
 </select>
 
-<label>Respect Level:</label>
+<label>Respect:</label>
 <select id="respect">
   <option value="5">5 - Excellent</option>
   <option value="4">4 - Good</option>
@@ -79,8 +79,8 @@ function generateReport() {
 
   // Pronouns
   const pronouns = {
-    he: {subj: "He", obj: "him", poss: "his"},
-    she: {subj: "She", obj: "her", poss: "her"},
+    he: {subj: "He", subjl: "he", obj: "him", poss: "his"},
+    she: {subj: "She", subjl: "she", obj: "her", poss: "her"},
   };
 
   const p = pronouns[pronoun];
